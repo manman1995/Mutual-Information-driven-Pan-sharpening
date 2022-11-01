@@ -1,2 +1,2 @@
-# Mutual-Information-driven-Pan-sharpening
-The source code is included into my additional project "pansharpening". Please refer to my main page.
+# MultulInform_PANsharpening
+The implementation of CVPR 2022 paper "mutual information-driven pan-sharpening"
