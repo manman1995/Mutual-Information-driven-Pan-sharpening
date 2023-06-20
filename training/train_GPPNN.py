@@ -21,11 +21,12 @@ from scipy.io import savemat
 import cv2
 import sys
 
-sys.path.append("/home/jieh/Projects/PAN_Sharp/PansharpingMul/GPPNN/")
-from models import get_sat_param
-from models.GPPNN2 import GPPNN as GPPNN, Mutual_info_reg
+# sys.path.append("/home/jieh/Projects/PAN_Sharp/PansharpingMul/GPPNN/")
+# from models import get_sat_param
+from models.GPPNN import GPPNN as GPPNN, Mutual_info_reg
 from metrics import get_metrics_reduced
-from utils import PSH5Datasetfu, PSDataset, prepare_data, normlization, save_param, psnr_loss, ssim, save_img
+from utils import PSH5Datasetfu, PSDataset, prepare_data, normlization, save_param, psnr_loss, ssim
+# from utils import PSH5Datasetfu, PSDataset, prepare_data, normlization, save_param, psnr_loss, ssim, save_img
 from data import Data
 
 '''
@@ -86,8 +87,8 @@ loss_fn = nn.L1Loss().to(device)
 #     prepare_data(data_path = '../PS_data/%s'%(satellite_str),
 #                  patch_size=32, aug_times=1, stride=32, synthetic=False, scale=scale,
 #                  file_name = train_path)
-data_dir_ms_train = '/home/jieh/Projects/PAN_Sharp/yaogan/WV2_data/train128/ms/'
-data_dir_pan_train = '/home/jieh/Projects/PAN_Sharp/yaogan/WV2_data/train128/pan/'
+data_dir_ms_train = './data/ms'
+data_dir_pan_train = './data/pan'
 # trainloader = DataLoader(PSH5Datasetfu(train_path),
 #                               batch_size=batch_size,
 #                               shuffle=True) #[N,C,K,H,W]
@@ -97,8 +98,8 @@ trainloader = DataLoader(Data(data_dir_ms=data_dir_ms_train, data_dir_pan=data_d
 
 # validationloader = DataLoader(PSH5Datasetfu(validation_path),
 #                               batch_size=1) #[N,C,K,H,W]
-data_dir_ms_test = '/home/jieh/Projects/PAN_Sharp/yaogan/WV2_data/test128/ms/'
-data_dir_pan_test = '/home/jieh/Projects/PAN_Sharp/yaogan/WV2_data/test128/pan/'
+data_dir_ms_test = './data/ms'
+data_dir_pan_test = './data/pan'
 testloader = DataLoader(Data(data_dir_ms=data_dir_ms_test, data_dir_pan=data_dir_pan_test),
                         batch_size=1)  # [N,C,K,H,W]
 
@@ -146,6 +147,7 @@ def adjust(init, fin, step, fin_step):
     return adj
 #
 for epoch in range(num_epochs):
+    loss = None
     ''' train '''
     for i, (ms, pan, gt) in enumerate(loader['train']):
         # 0. preprocess data

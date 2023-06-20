@@ -249,7 +249,7 @@ class GPPNN(nn.Module):
         self.interact = FeatureInteract(n_feat, n_feat//2)
         self.refine = Refine(n_feat, ms_channels)
 
-    def forward(self, ms, i, pan=None):
+    def forward(self, ms, pan=None):
         # ms  - low-resolution multi-spectral image [N,C,h,w]
         # pan - high-resolution panchromatic image [N,1,H,W]
         if type(pan) == torch.Tensor:
@@ -264,8 +264,8 @@ class GPPNN(nn.Module):
         panf = self.extract_pan(pan)
         mHRf = self.extract_ms(mHR)
 
-        feature_save(panf, '/home/jieh/Projects/PAN_Sharp/PansharpingMul/GPPNN/training/logs/GPPNN2/panf', i)
-        feature_save(mHRf, '/home/jieh/Projects/PAN_Sharp/PansharpingMul/GPPNN/training/logs/GPPNN2/mHRf', i)
+        # feature_save(panf, '/home/jieh/Projects/PAN_Sharp/PansharpingMul/GPPNN/training/logs/GPPNN2/panf', i)
+        # feature_save(mHRf, '/home/jieh/Projects/PAN_Sharp/PansharpingMul/GPPNN/training/logs/GPPNN2/mHRf', i)
 
         finput = torch.cat([panf, mHRf], dim=1)
         fmid = self.interact(finput)
