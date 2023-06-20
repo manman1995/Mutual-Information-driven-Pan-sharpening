@@ -110,6 +110,10 @@ class Data(data.Dataset):
 
         ms_image = load_img(self.ms_image_filenames[index])
         pan_image = load_img(self.pan_image_filenames[index])
+
+        # ms_image = ImageOps.grayscale(ms_image)
+        pan_image = ImageOps.grayscale(pan_image)
+
         _, file = os.path.split(self.ms_image_filenames[index])
         ms_image = ms_image.crop((0, 0, ms_image.size[0] // self.upscale_factor * self.upscale_factor,
                                   ms_image.size[1] // self.upscale_factor * self.upscale_factor))
